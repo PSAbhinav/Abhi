@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        /* General page styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: rgb(0, 0, 0);
+            overflow: hidden;
+        }
+
+        /* Fullscreen background slideshow */
+        .background-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: fade 12s infinite;
+        }
+
+        @keyframes fade {
+            0% { opacity: 1; }
+            33% { opacity: 1; }
+            66% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .bg-slide:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .bg-slide:nth-child(2) {
+            animation-delay: 4s;
+        }
+
+        .bg-slide:nth-child(3) {
+            animation-delay: 8s;
+        }
+
+        /* Centering container */
+        .center-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Flash message styling */
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        .flash {
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .flash.success {
+            background-color: #28a745;
+        }
+        .flash.danger {
+            background-color: #dc3545;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background slideshow -->
+    <div class="background-slideshow">
+        <div class="bg-slide" style="background-image: url('/static/IMG1.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('/static/IMG2.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('/static/IMG3.jpg');"></div>
+    </div>
+
+    <!-- Centered signup form -->
+    <div class="center-container">
+        <h1>Signup</h1>
+        <div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <form method="POST" action="/signup">
+            <input type="text" name="user_id" placeholder="User ID" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+</body>
+</html>
